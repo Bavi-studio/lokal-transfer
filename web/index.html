@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Локальный обменник</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">↔</div>
+      <div class="brand-copy"><h1>Локальный обменник</h1><p>Передача между телефоном и компьютером</p></div>
+      <span id="connectionBadge" class="connection-badge pending"><span class="status-dot"></span><span id="connectionText">Проверка связи</span></span>
+    </header>
+
+    <section class="auth-panel panel" id="authPanel">
+      <div><h2>Подключение</h2><p class="muted">Введите токен, показанный в консоли сервера Windows.</p></div>
+      <form id="authForm" class="auth-form">
+        <label class="sr-only" for="tokenInput">Токен доступа</label>
+        <input id="tokenInput" type="password" autocomplete="current-password" placeholder="Токен доступа" required>
+        <button class="button primary" type="submit">Подключиться</button>
+      </form>
+      <p id="authError" class="inline-error" role="alert" hidden></p>
+    </section>
+
+    <div id="workspace" hidden>
+      <section class="panel upload-panel">
+        <div class="section-heading"><div><p class="eyebrow">01 / ФАЙЛЫ</p><h2>Отправить на компьютер</h2><p class="muted">Можно выбрать несколько файлов. Передача идёт напрямую в локальную сеть.</p></div></div>
+        <input id="fileInput" type="file" multiple hidden>
+        <button id="chooseFiles" class="file-picker" type="button"><span class="picker-icon" aria-hidden="true">＋</span><span><strong>Выбрать файлы</strong><small>Откроется стандартный диалог устройства</small></span><span class="picker-arrow" aria-hidden="true">→</span></button>
+        <div id="uploadQueue" class="upload-queue" aria-live="polite"></div>
+      </section>
+
+      <section class="panel text-panel">
+        <div class="section-heading"><div><p class="eyebrow">02 / ТЕКСТ</p><h2>Передать сообщение</h2><p class="muted">Текст останется в поле, пока отправка не подтвердится.</p></div></div>
+        <label class="sr-only" for="textInput">Текст сообщения</label>
+        <textarea id="textInput" rows="4" placeholder="Введите или вставьте текст…" maxlength="1048576"></textarea>
+        <div class="text-actions"><span id="textCount" class="muted small">0 символов</span><div class="button-row"><button id="copyText" class="button secondary" type="button">Копировать</button><button id="sendText" class="button primary" type="button">Отправить текст</button></div></div>
+        <div id="messages" class="messages-list" aria-live="polite"></div>
+      </section>
+
+      <section class="panel files-panel">
+        <div class="section-heading files-heading"><div><p class="eyebrow">03 / ХРАНИЛИЩЕ</p><h2>Файлы на компьютере</h2><p class="muted">Файлы, уже сохранённые на сервере.</p></div><button id="refreshFiles" class="button secondary refresh-button" type="button"><span aria-hidden="true">↻</span> Обновить</button></div>
+        <div id="filesSummary" class="files-summary">Загрузка списка…</div>
+        <div id="filesList" class="files-list" aria-live="polite"></div>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="section-heading"><div><p class="eyebrow">04 / ИСТОРИЯ</p><h2>Текстовые сообщения</h2></div><button id="refreshText" class="button secondary" type="button">Обновить</button></div>
+        <div id="textHistory" class="text-history"></div>
+      </section>
+      <footer class="footer"><span>Работает в локальной сети</span><button id="disconnect" class="text-button" type="button">Отключить токен</button></footer>
+    </div>
+  </main>
+  <div id="toastRegion" class="toast-region" role="status" aria-live="polite"></div>
+  <dialog id="deleteDialog" class="confirm-dialog"><form method="dialog"><div class="dialog-symbol">!</div><h2>Удалить файл?</h2><p id="deletePrompt" class="muted"></p><div class="button-row dialog-actions"><button class="button secondary" value="cancel">Отмена</button><button id="confirmDelete" class="button danger" value="confirm">Удалить</button></div></form></dialog>
+</body>
+</html>

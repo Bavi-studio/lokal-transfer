@@ -1,0 +1,8 @@
+# Runtime dependencies. Tested range for Python 3.13/3.14.
+fastapi>=0.115.0,<1.0.0
+uvicorn>=0.30.0,<1.0.0
+
+# Test dependencies (install with: python -m pip install -r requirements.txt)
+pytest>=8.0.0,<10.0.0
+httpx>=0.27.0,<1.0.0
+psutil>=5.9.0,<8.0.0
